@@ -1,12 +1,12 @@
 package br.sc.senai.dao;
 
-import br.sc.senai.model.User;
+import br.sc.senai.model.Pessoa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class UserDAOTest {
+public class PessoaDAOTest {
 
 	private static EntityManagerFactory factory;
 	private static EntityManager entityManager;
@@ -16,9 +16,9 @@ public class UserDAOTest {
 
 		entityManager = factory.createEntityManager();
 
-		update();
-
-		delete();
+		insert();
+		//  update();
+		//  delete();
 
 		entityManager.close();
 		factory.close();
@@ -27,12 +27,12 @@ public class UserDAOTest {
 	public static void insert() {
 		entityManager.getTransaction().begin();
 
-		User newUser = new User();
-		newUser.setEmail("pedromoratelli@gmail.com");
-		newUser.setFullname("Pedro Moratelli");
-		newUser.setPassword("senhasecreta");
+		Pessoa newPessoa = new Pessoa();
+		newPessoa.setNome("Pedro");
+		newPessoa.setSobrenome("Moratelli");
+		newPessoa.setCpf(888288888);
 
-		entityManager.persist(newUser);
+		entityManager.persist(newPessoa);
 
 		entityManager.getTransaction().commit();
 
@@ -41,12 +41,13 @@ public class UserDAOTest {
 	public static void update() {
 		entityManager.getTransaction().begin();
 
-		User updatedUser = entityManager.find(User.class, 1);
+		Pessoa updatedPessoa = entityManager.find(Pessoa.class, 1);
 
-		updatedUser.setFullname("Bill Gates");
-		updatedUser.setEmail("bill.gates@microsoft.com");
+		updatedPessoa.setNome("Bill");
+		updatedPessoa.setSobrenome("Gates");
+		updatedPessoa.setCpf(899910907);
 
-		entityManager.merge(updatedUser);
+		entityManager.merge(updatedPessoa);
 
 		entityManager.getTransaction().commit();
 	}
@@ -54,9 +55,9 @@ public class UserDAOTest {
 	public static void delete() {
 		entityManager.getTransaction().begin();
 
-		User user = entityManager.find(User.class, 2);
+		Pessoa pessoa = entityManager.find(Pessoa.class, 2);
 
-		entityManager.remove(user);
+		entityManager.remove(pessoa);
 
 		entityManager.getTransaction().commit();
 	}
